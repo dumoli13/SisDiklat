@@ -1,20 +1,21 @@
 package com.doems.sisdiklat.sisdiklat.Model;
 
-import java.util.Calendar;
+import java.util.Date;
+import java.util.ArrayList;
 
 public class ModelUnavailableDate {
 
-    private Calendar[] date;
+    private ArrayList<Date> date;
 
     public ModelUnavailableDate(){
 
     }
 
-    public ModelUnavailableDate(Calendar[] date){
+    public ModelUnavailableDate(ArrayList<Date> date){
         this.date = date;
     }
 
-    public Calendar[] getDate() {
+    public ArrayList<Date> getDate() {
         return date;
     }
 }

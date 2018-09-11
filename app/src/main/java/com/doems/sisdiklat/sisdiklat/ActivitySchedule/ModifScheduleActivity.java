@@ -80,6 +80,7 @@ public class ModifScheduleActivity extends AppCompatActivity implements OnItemSe
     List<Integer> unavailableDateList = new ArrayList<>();
     List<Integer> dateList = new ArrayList<>();
     Calendar calendar1 = Calendar.getInstance();
+    Calendar[] unavailableCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +113,9 @@ public class ModifScheduleActivity extends AppCompatActivity implements OnItemSe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot  postSnapshot : dataSnapshot.getChildren()){
                     ModelRoom _modelRoom = postSnapshot.getValue(ModelRoom.class);
+                    String roomID = postSnapshot.getKey();
                     if(_modelRoom !=null){
-                        ModelRoom modelRoom = new ModelRoom(uID, _modelRoom.getName(), _modelRoom.getCapacity());
+                        ModelRoom modelRoom = new ModelRoom(roomID, _modelRoom.getName(), _modelRoom.getCapacity());
                         allRoomList.add(modelRoom);
                         allRoomList1.add(modelRoom.getName()+" (capacity: "+modelRoom.getCapacity()+")");
                         dataAdapter = new ArrayAdapter<>(getApplicationContext(),
@@ -151,7 +153,13 @@ public class ModifScheduleActivity extends AppCompatActivity implements OnItemSe
                 et_participant.setText(participant);
                 et_speaker.setText(speaker);
                 tv_startDate.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(startDate));
-                tv_endDate.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(endDate));
+                if(endDate==null){
+                    ll_endDate.setVisibility(View.GONE);
+                    checkBox.setChecked(false);
+                }
+                else{
+                    tv_endDate.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(endDate));
+                }
             }
 
             @Override
@@ -162,16 +170,43 @@ public class ModifScheduleActivity extends AppCompatActivity implements OnItemSe
         new FireDataSchedule(uID).ref.addValueEventListener(scheduleEventListener);
     }
 
-    private void prepareDateList(){
-        if(roomID!=null){
+//    private void prepareDateList(){
+//        if(roomID!=null){
+//            dateEventListener = new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    ModelUnavailableDate modelUnavailableDate = dataSnapshot.getValue(ModelUnavailableDate.class);
+//                    unavailableDateList = modelUnavailableDate.getDate();
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) { }
+//            };
+//            new FireDataUnavailableTime(uID).ref.child(roomID).addValueEventListener(dateEventListener);
+//        }
+//    }
+
+    private void prepareDateList() {
+        if (roomID != null) {
             dateEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ModelUnavailableDate modelUnavailableDate = dataSnapshot.getValue(ModelUnavailableDate.class);
-                    unavailableDateList = modelUnavailableDate.getDate();
+                    if (modelUnavailableDate != null) {
+                        List<Date> _listDate = modelUnavailableDate.getDate();
+                        List<Calendar> _listCalendar = new ArrayList<>(_listDate.size());
+                        for (Date date : _listDate) {
+                            Calendar _calendar = Calendar.getInstance();
+                            _calendar.setTime(date);
+                            _listCalendar.add(_calendar);
+                        }
+                        unavailableCalendar = new Calendar[_listCalendar.size()];
+                        unavailableCalendar = _listCalendar.toArray(unavailableCalendar);
+                    }
                 }
+
                 @Override
-                public void onCancelled(DatabaseError databaseError) { }
+                public void onCancelled(DatabaseError databaseError) {
+                }
             };
             new FireDataUnavailableTime(uID).ref.child(roomID).addValueEventListener(dateEventListener);
         }
@@ -293,10 +328,24 @@ public class ModifScheduleActivity extends AppCompatActivity implements OnItemSe
             return;
         }
         else{
-            new FireDataSchedule(uID).editSchedule(uID, event, roomID, roomName, speaker, participant, startDate, endDate, new DatabaseReference.CompletionListener() {
+            final ArrayList<Date> setNewUnavailable = new ArrayList<>();
+            Calendar _calendar = Calendar.getInstance();
+
+            setNewUnavailable.add(startDate);
+            if(endDate!=null){
+                checkStartDate = (startDate.getYear()+1900)*10000+(startDate.getMonth()+1)*100+startDate.getDate();
+                checkEndDate = endDate.getYear()*10000+(endDate.getMonth()+1)*100+endDate.getDate();
+                for(int i=0;i>checkEndDate-checkStartDate-1;i--) {
+                    _calendar.setTime(new Date(startDate.getTime()));
+                    _calendar.add(Calendar.DATE,i);
+                    setNewUnavailable.add(new Date(_calendar.getTimeInMillis()));
+                }
+            }
+
+            new FireDataSchedule(uID).editSchedule(scheduleID, event, roomID, roomName, speaker, participant, startDate, endDate, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                    new FireDataUnavailableTime(uID).writeUnavailable(roomID, dateList, new DatabaseReference.CompletionListener() {
+                    new FireDataUnavailableTime(uID).writeUnavailable(roomID, setNewUnavailable, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             finish();

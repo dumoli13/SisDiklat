@@ -5,8 +5,8 @@ import android.content.Context;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FireDataUnavailableTime {
@@ -26,7 +26,7 @@ public class FireDataUnavailableTime {
         ref = FireData.getRefDatabase().child(COLLECTION_USER);
     }
 
-    public void writeUnavailable(String roomID, List<Integer> date, DatabaseReference.CompletionListener completionListener){
+    public void writeUnavailable(String roomID, ArrayList<Date> date, DatabaseReference.CompletionListener completionListener){
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put(DATE, date);
 
