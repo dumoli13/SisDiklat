@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_cardTime"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_small_quarter"
+    android:layout_marginRight="@dimen/margin_small_quarter"
+    android:layout_marginTop="@dimen/margin_quarter_quarter"
+    android:background="@drawable/border_login"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_quarter"
+    android:paddingRight="@dimen/padding_quarter">
+
+    <TextView
+        android:id="@+id/tv_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="start"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="01.00"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</LinearLayout>

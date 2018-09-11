@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "644149768750",
+    "firebase_url": "https://sisdiklat-69d99.firebaseio.com",
+    "project_id": "sisdiklat-69d99",
+    "storage_bucket": "sisdiklat-69d99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644149768750:android:324acae809505051",
+        "android_client_info": {
+          "package_name": "com.doems.small.sisdiklat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644149768750-hjeao8hqs7f0hjh931f1hpmvanv048db.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doems.small.sisdiklat",
+            "certificate_hash": "3c574618d3c542f4c3d0e50d32306d3cb0fab8a6"
+          }
+        },
+        {
+          "client_id": "644149768750-d656f6rsmur1d4ml5cftqal8l2abh3dr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADpWCvKQLuMpyg_YSYt5UUOQte1wcUgo8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644149768750-d656f6rsmur1d4ml5cftqal8l2abh3dr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

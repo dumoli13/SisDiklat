@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.doems.sisdiklat.sisdiklat">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".FlashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ActivityAccount.SignInActivity" />
+        <activity android:name=".ActivityAccount.SignUpActivity" />
+        <activity
+            android:name=".ActivityHome.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ActivityHome.RunningTextActivity" />
+        <activity android:name=".ActivityHome.AboutActivity" />
+        <activity android:name=".ActivityAccount.ProfilActivity" />
+        <activity android:name=".ActivitySchedule.NewScheduleActivity" />
+        <activity android:name=".ActivitySchedule.ModifScheduleActivity" />\
+        <activity android:name=".Room.EditRoomActivity" />
+        <activity
+            android:name=".Room.AvailableRoomActivity"
+            android:label="@string/title_activity_available_room"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ActivityAccount.EditPhoneActivity"
+            android:label="@string/title_activity_edit_phone"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Room.AddRoomActivity"></activity>
+    </application>
+
+</manifest>

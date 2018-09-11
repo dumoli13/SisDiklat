@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SisDiklat</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_available_room">AvailableRoomActivity</string>
+    <string name="title_activity_edit_phone">EditPhoneActivity</string>
+</resources>

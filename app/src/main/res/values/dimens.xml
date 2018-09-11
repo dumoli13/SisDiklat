@@ -1,0 +1,152 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <!-- FONT SIZE -->
+
+    <dimen name="font_size_heading_1">44sp</dimen>
+    <dimen name="font_size_heading_2">32sp</dimen>
+    <dimen name="font_size_heading_3">28sp</dimen>
+    <dimen name="font_size_heading_4">24sp</dimen>
+    <dimen name="font_size_heading_5">20sp</dimen>
+    <dimen name="font_size_heading_6">18sp</dimen>
+    <dimen name="font_size_sub_heading">16sp</dimen>
+    <dimen name="font_size_body">14sp</dimen>
+    <dimen name="font_size_caption">12sp</dimen>
+
+
+    <!-- MARGIN -->
+
+    <dimen name="margin_double_full">64dp</dimen>
+    <dimen name="margin_full_quarter_quarter">56dp</dimen>
+    <dimen name="margin_full_quarter">48dp</dimen>
+    <dimen name="margin_full">32dp</dimen>
+    <dimen name="margin_half_quarter">24dp</dimen>
+    <dimen name="margin_half">16dp</dimen>
+    <dimen name="margin_quarter_quarter">12dp</dimen>
+    <dimen name="margin_quarter">8dp</dimen>
+    <dimen name="margin_small_quarter">4dp</dimen>
+
+
+    <!-- PADDING -->
+
+    <dimen name="padding_double_full">64dp</dimen>
+    <dimen name="padding_full_quarter">48dp</dimen>
+    <dimen name="padding_full">32dp</dimen>
+    <dimen name="padding_half_quarter">24dp</dimen>
+    <dimen name="padding_half">16dp</dimen>
+    <dimen name="padding_quarter_quarter">12dp</dimen>
+    <dimen name="padding_quarter">8dp</dimen>
+    <dimen name="padding_small_quarter">4dp</dimen>
+
+
+    <!-- BACKGROUND -->
+    <dimen name="background_margin_double_full">64dp</dimen>
+    <dimen name="background_margin_full">32dp</dimen>
+    <dimen name="background_margin_half_quarter">24dp</dimen>
+    <dimen name="background_margin_half">16dp</dimen>
+    <dimen name="background_margin_quarter">8dp</dimen>
+
+
+    <!-- MARGIN TEXT -->
+    <dimen name="text_margin_half">16dp</dimen>
+    <dimen name="text_margin_quarter">8dp</dimen>
+
+
+    <!-- MARGIN -->
+
+    <dimen name="m_triple_full">96dp</dimen>
+    <dimen name="m_double_full_half_quarter">88dp</dimen>
+    <dimen name="m_double_full_half">80dp</dimen>
+    <dimen name="m_double_full_quarter">72dp</dimen>
+    <dimen name="m_double_full">64dp</dimen>
+    <dimen name="m_full_half_quarter_small_quarter">60dp</dimen>
+    <dimen name="m_full_half_quarter">56dp</dimen>
+    <dimen name="m_full_half_small_quarter">52dp</dimen>
+    <dimen name="m_full_half">48dp</dimen>
+    <dimen name="m_full_quarter_small_quarter">44dp</dimen>
+    <dimen name="m_full_quarter">40dp</dimen>
+    <dimen name="m_full_small_quarter">36dp</dimen>
+    <dimen name="m_full">32dp</dimen>
+    <dimen name="m_half_quarter_small_quarter">28dp</dimen>
+    <dimen name="m_half_quarter">24dp</dimen>
+    <dimen name="m_half_small_quarter">20dp</dimen>
+    <dimen name="m_half">16dp</dimen>
+    <dimen name="m_quarter_small_quarter">12dp</dimen>
+    <dimen name="m_quarter">8dp</dimen>
+    <dimen name="m_small_quarter">4dp</dimen>
+
+
+    <dimen name="m_offset_triple_full">-96dp</dimen>
+    <dimen name="m_offset_double_full_half_quarter">-88dp</dimen>
+    <dimen name="m_offset_double_full_half">-80dp</dimen>
+    <dimen name="m_offset_double_full_quarter">-72dp</dimen>
+    <dimen name="m_offset_double_full">-64dp</dimen>
+    <dimen name="m_offset_full_half_quarter_small_quarter">-60dp</dimen>
+    <dimen name="m_offset_full_half_quarter">-56dp</dimen>
+    <dimen name="m_offset_full_half_small_quarter">-52dp</dimen>
+    <dimen name="m_offset_full_half">-48dp</dimen>
+    <dimen name="m_offset_full_quarter_small_quarter">-44dp</dimen>
+    <dimen name="m_offset_full_quarter">-40dp</dimen>
+    <dimen name="m_offset_full_small_quarter">-36dp</dimen>
+    <dimen name="m_offset_full">-32dp</dimen>
+    <dimen name="m_offset_half_quarter_small_quarter">-28dp</dimen>
+    <dimen name="m_offset_half_quarter">-24dp</dimen>
+    <dimen name="m_offset_half_small_quarter">-20dp</dimen>
+    <dimen name="m_offset_half">-16dp</dimen>
+    <dimen name="m_offset_quarter_small_quarter">-12dp</dimen>
+    <dimen name="m_offset_quarter">-8dp</dimen>
+    <dimen name="m_offset_small_quarter">-4dp</dimen>
+
+
+    <!-- PADDING -->
+
+    <dimen name="p_triple_full">96dp</dimen>
+    <dimen name="p_double_full_half_quarter">88dp</dimen>
+    <dimen name="p_double_full_half">80dp</dimen>
+    <dimen name="p_double_full_quarter">72dp</dimen>
+    <dimen name="p_double_full">64dp</dimen>
+    <dimen name="p_full_half_quarter_small_quarter">60dp</dimen>
+    <dimen name="p_full_half_quarter">56dp</dimen>
+    <dimen name="p_full_half_small_quarter">52dp</dimen>
+    <dimen name="p_full_half">48dp</dimen>
+    <dimen name="p_full_quarter_small_quarter">44dp</dimen>
+    <dimen name="p_full_quarter">40dp</dimen>
+    <dimen name="p_full_small_quarter">36dp</dimen>
+    <dimen name="p_full">32dp</dimen>
+    <dimen name="p_half_quarter_small_quarter">28dp</dimen>
+    <dimen name="p_half_quarter">24dp</dimen>
+    <dimen name="p_half_small_quarter">20dp</dimen>
+    <dimen name="p_half">16dp</dimen>
+    <dimen name="p_quarter_small_quarter">12dp</dimen>
+    <dimen name="p_quarter">8dp</dimen>
+    <dimen name="p_small_quarter">4dp</dimen>
+
+
+    <dimen name="p_offset_triple_full">-96dp</dimen>
+    <dimen name="p_offset_double_full_half_quarter">-88dp</dimen>
+    <dimen name="p_offset_double_full_half">-80dp</dimen>
+    <dimen name="p_offset_double_full_quarter">-72dp</dimen>
+    <dimen name="p_offset_double_full">-64dp</dimen>
+    <dimen name="p_offset_full_half_quarter_small_quarter">-60dp</dimen>
+    <dimen name="p_offset_full_half_quarter">-56dp</dimen>
+    <dimen name="p_offset_full_half_small_quarter">-52dp</dimen>
+    <dimen name="p_offset_full_half">-48dp</dimen>
+    <dimen name="p_offset_full_quarter_small_quarter">-44dp</dimen>
+    <dimen name="p_offset_full_quarter">-40dp</dimen>
+    <dimen name="p_offset_full_small_quarter">-36dp</dimen>
+    <dimen name="p_offset_full">-32dp</dimen>
+    <dimen name="p_offset_half_quarter_small_quarter">-28dp</dimen>
+    <dimen name="p_offset_half_quarter">-24dp</dimen>
+    <dimen name="p_offset_half_small_quarter">-20dp</dimen>
+    <dimen name="p_offset_half">-16dp</dimen>
+    <dimen name="p_offset_quarter_small_quarter">-12dp</dimen>
+    <dimen name="p_offset_quarter">-8dp</dimen>
+    <dimen name="p_offset_small_quarter">-4dp</dimen>
+
+
+</resources>
+
