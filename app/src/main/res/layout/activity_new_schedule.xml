@@ -135,10 +135,15 @@
                     android:textSize="12sp"
                     android:text="Room/Location" />
 
-                <Spinner
-                    android:id="@+id/spinner_room"
+                <TextView
+                    android:id="@+id/tv_room"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small_quarter"
+                    android:layout_marginBottom="@dimen/margin_small_quarter"
+                    android:text="- select room"
+                    android:textColor="@color/black" />
+
             </LinearLayout>
 
         </RelativeLayout>

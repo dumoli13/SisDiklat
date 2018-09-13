@@ -26,10 +26,10 @@ public class FireDataUnavailableTime {
         ref = FireData.getRefDatabase().child(COLLECTION_USER);
     }
 
-    public void writeUnavailable(String roomID, ArrayList<Date> date, DatabaseReference.CompletionListener completionListener){
+    public void writeUnavailable(String roomID, String scheduleID, ArrayList<Date> date, DatabaseReference.CompletionListener completionListener){
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put(DATE, date);
 
-        ref.child(roomID).updateChildren(objectMap, completionListener);
+        ref.child(roomID).child(scheduleID).updateChildren(objectMap, completionListener);
     }
 }

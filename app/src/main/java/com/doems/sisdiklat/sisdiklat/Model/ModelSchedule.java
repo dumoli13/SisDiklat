@@ -6,6 +6,7 @@ public class ModelSchedule {
     private String uID;
     private String event;
     private String roomID;
+    private String roomCap;
     private String roomName;
     private String speaker;
     private String participant;
@@ -28,6 +29,19 @@ public class ModelSchedule {
         this.endDate = endDate;
     }
 
+    public ModelSchedule(String uID, String event, String roomID, String roomCap, String roomName, String speaker,
+                         String participant, Date startDate, Date endDate){
+        this.uID = uID;
+        this.event = event;
+        this.roomID = roomID;
+        this.roomCap = roomCap;
+        this.roomName = roomName;
+        this.speaker = speaker;
+        this.participant = participant;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public String getuID() {
         return uID;
     }
@@ -38,6 +52,10 @@ public class ModelSchedule {
 
     public String getRoomID() {
         return roomID;
+    }
+
+    public String getRoomCap() {
+        return roomCap;
     }
 
     public String getRoomName() {

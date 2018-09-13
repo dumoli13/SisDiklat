@@ -85,10 +85,9 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.MyViewHold
         final List<String> keyList = new ArrayList<>(scheduleMap.keySet());
         final List<ModelSchedule> scheduleList = new ArrayList<>(scheduleMap.values());
         final String key = keyList.get(i);
-        ModelSchedule schedule = scheduleList.get(i);
+        final ModelSchedule schedule = scheduleList.get(i);
         SimpleDateFormat sdfDate = new SimpleDateFormat("d", Locale.US);
         SimpleDateFormat sdfMonth = new SimpleDateFormat("MMM", Locale.US);
-        SimpleDateFormat sdfTime = new SimpleDateFormat("H:mm", Locale.US);
 
         String date = sdfDate.format(schedule.getStartDate());
         String month = sdfMonth.format(schedule.getStartDate());
@@ -104,7 +103,7 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.MyViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext().getApplicationContext(), ModifScheduleActivity.class);
-                intent.putExtra("message", key);
+                intent.putExtra("key", key);
                 v.getContext().startActivity(intent);
             }
         });

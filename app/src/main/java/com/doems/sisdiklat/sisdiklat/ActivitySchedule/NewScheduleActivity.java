@@ -1,6 +1,7 @@
 package com.doems.sisdiklat.sisdiklat.ActivitySchedule;
 
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,11 +42,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewScheduleActivity extends AppCompatActivity implements OnItemSelectedListener{
+public class NewScheduleActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     @BindView(R.id.btn_back) ImageView btn_back;
     @BindView(R.id.et_event) EditText et_event;
-    @BindView(R.id.spinner_room) Spinner spinner_room;
+    @BindView(R.id.tv_room) TextView tv_room;
     @BindView(R.id.et_speaker) EditText et_speaker;
     @BindView(R.id.et_participant) EditText et_participant;
     @BindView(R.id.checkBox) CheckBox checkBox;
@@ -55,24 +57,21 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
     private String uID;
     private String event;
     private String roomID;
+    private String roomCap;
     private String roomName;
     private String speaker;
     private String participant;
     private Date startDate;
     private Date endDate;
     private SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d yyyy", Locale.US);
-    private SimpleDateFormat calendarFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private boolean checked=false;
-    ArrayAdapter<String> dataAdapter;
 
     private int checkStartDate;
     private int checkEndDate;
-
-    private ValueEventListener roomEventListener;
+    DatePickerDialog datePickerDialog1;
+    DatePickerDialog datePickerDialog2;
     private ValueEventListener dateEventListener;
-    List<ModelRoom> allRoomList = new ArrayList<>();
-    List<String> allRoomList1 = new ArrayList<>();
-    List<Integer> dateList = new ArrayList<>();
+    List<Calendar> _listCalendar = new ArrayList<>();
     Calendar calendar1 = Calendar.getInstance();
     Calendar[] unavailableCalendar;
 
@@ -83,45 +82,7 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
         setContentView(R.layout.activity_new_schedule);
         ButterKnife.bind(this);
         ll_endDate.setVisibility(View.GONE);
-        calendar1.setTime(new Date(System.currentTimeMillis()));
-        calendar1.add(Calendar.DATE,1);
-        startDate = calendar1.getTime();
-        tv_startDate.setText(sdf.format(startDate));
-
         uID = FirebaseAuth.getInstance().getUid();
-        prepareRoomList();
-
-    }
-
-    private void prepareRoomList(){
-        if(allRoomList.size()!=0) allRoomList.clear();
-        if(allRoomList1.size()!=0) allRoomList1.clear();
-        roomEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot  postSnapshot : dataSnapshot.getChildren()){
-                    String roomID = postSnapshot.getKey();
-                    ModelRoom _modelRoom = postSnapshot.getValue(ModelRoom.class);
-                    if(_modelRoom !=null){
-                        ModelRoom modelRoom = new ModelRoom(roomID, _modelRoom.getName(), _modelRoom.getCapacity());
-                        allRoomList.add(modelRoom);
-                        allRoomList1.add(modelRoom.getName()+" (capacity: "+modelRoom.getCapacity()+")");
-                        dataAdapter = new ArrayAdapter<>(getApplicationContext(),
-                                R.layout.spinner_item, allRoomList1);
-                        dataAdapter.setDropDownViewResource(R.layout.spinner_item);
-                        spinner_room.setAdapter(dataAdapter);
-                        spinner_room.setSelection(dataAdapter.getPosition(roomName));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        new FireDataRoom(uID).ref.addValueEventListener(roomEventListener);
-        spinner_room.setOnItemSelectedListener(this);
     }
 
     private void prepareDateList(){
@@ -129,18 +90,20 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
             dateEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    ModelUnavailableDate modelUnavailableDate = dataSnapshot.getValue(ModelUnavailableDate.class);
-                    if(modelUnavailableDate!=null){
-                        List<Date> _listDate = modelUnavailableDate.getDate();
-                        List<Calendar> _listCalendar = new ArrayList<>(_listDate.size());
-                        for(Date date : _listDate){
-                            Calendar _calendar = Calendar.getInstance();
-                            _calendar.setTime(date);
-                            _listCalendar.add(_calendar);
+                    _listCalendar.clear();
+                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        ModelUnavailableDate modelUnavailableDate = postSnapshot.getValue(ModelUnavailableDate.class);
+                        if(modelUnavailableDate!=null){
+                            List<Date> _listDate = modelUnavailableDate.getDate();
+                            for(Date date : _listDate){
+                                Calendar _calendar = Calendar.getInstance();
+                                _calendar.setTime(date);
+                                _listCalendar.add(_calendar);
+                            }
                         }
-                        unavailableCalendar = new Calendar[_listCalendar.size()];
-                        unavailableCalendar = _listCalendar.toArray(unavailableCalendar);
                     }
+                    unavailableCalendar = new Calendar[_listCalendar.size()];
+                    unavailableCalendar = _listCalendar.toArray(unavailableCalendar);
                 }
                 @Override
                 public void onCancelled(DatabaseError databaseError) { }
@@ -149,89 +112,22 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
         }
     }
 
-//    private boolean checkAvailableDate (int check){
-//        boolean[] result = {true};
-//        if(unavailableDateList.size()>0){
-//            for(int i=0;i<unavailableDateList.size();i++){
-//                if(unavailableDateList.get(i)==check){
-//                    result[0] = false;
-//                    break;
-//                }
-//            }
-//        }
-//        return result[0];
-//    }
+    @OnClick(R.id.ll_room) public void pickRoom(){
+        Intent intent = new Intent(this, setRoomActivity.class);
+        startActivityForResult(intent, 1);
+    }
 
-//    DatePickerDialog.OnDateSetListener startDatePicker = new DatePickerDialog.OnDateSetListener() {
-//
-//        @Override
-//        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-//            calendar1.set(Calendar.YEAR, year);
-//            calendar1.set(Calendar.MONTH, monthOfYear);
-//            calendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//
-//            startDate = calendar1.getTime();
-//            checkStartDate = startDate.getYear()*10000+startDate.getMonth()*100+startDate.getDate();
-//            if(checkAvailableDate(checkStartDate)){
-//                tv_startDate.setText(sdf.format(startDate));
-//            }
-//            else{
-//                Toast.makeText(getApplicationContext(), "Room unavailable in this time", Toast.LENGTH_SHORT).show();
-//                pickStartDate();
-//            }
-//        }
-//    };
-//
-//    DatePickerDialog.OnDateSetListener endDatePicker = new DatePickerDialog.OnDateSetListener() {
-//
-//        @Override
-//        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-//            calendar1.set(Calendar.YEAR, year);
-//            calendar1.set(Calendar.MONTH, monthOfYear);
-//            calendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//
-//            endDate = calendar1.getTime();
-//            checkEndDate = endDate.getYear()*10000+endDate.getMonth()*100+endDate.getDate();
-//
-//            if(endDate.getTime()>startDate.getTime()){
-//                if(checkAvailableDate(checkEndDate)){
-//                    tv_endDate.setText(sdf.format(endDate));
-//                }
-//                else{
-//                    Toast.makeText(getApplicationContext(), "Room unavailable in this time", Toast.LENGTH_SHORT).show();
-//                    pickEndDate();
-//                }
-//            }
-//            else{
-//                Toast.makeText(getApplicationContext(), "choose another date", Toast.LENGTH_SHORT).show();
-//                pickEndDate();
-//            }
-//        }
-//    };
-//
     @OnClick(R.id.ll_startDate) public void pickStartDate(){
         Calendar _calendar = Calendar.getInstance();
         _calendar.setTime(new Date(System.currentTimeMillis()));
-        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance((DatePickerDialog.OnDateSetListener) getApplication(),
+        datePickerDialog1 = DatePickerDialog.newInstance(this,
                 calendar1.get(Calendar.YEAR),
                 calendar1.get(Calendar.MONTH),
                 calendar1.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show(getFragmentManager(), "datePickerDialog");
-        datePickerDialog.setVersion(DatePickerDialog.Version.VERSION_2);
-        datePickerDialog.setMinDate(_calendar);
-        if(unavailableCalendar!=null){
-            datePickerDialog.setDisabledDays(unavailableCalendar);
-        }
-
-        startDate = calendar1.getTime();
-        tv_startDate.setText(sdf.format(startDate));
-
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(NewScheduleActivity.this, startDatePicker,
-//                calendar1.get(Calendar.YEAR),
-//                calendar1.get(Calendar.MONTH),
-//                calendar1.get(Calendar.DAY_OF_MONTH));
-//        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-//        datePickerDialog.show();
+        datePickerDialog1.show(getFragmentManager(), "datePickerDialog");
+        datePickerDialog1.setVersion(DatePickerDialog.Version.VERSION_2);
+        datePickerDialog1.setMinDate(_calendar);
+        if(unavailableCalendar!=null) datePickerDialog1.setDisabledDays(unavailableCalendar);
     }
 
     @OnClick(R.id.ll_endDate) public void pickEndDate(){
@@ -243,35 +139,15 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
             Calendar _calendar = Calendar.getInstance();
             _calendar.setTime(startDate);
             _calendar.add(Calendar.DATE,1);
-            DatePickerDialog datePickerDialog = DatePickerDialog.newInstance((DatePickerDialog.OnDateSetListener) this,
+            datePickerDialog2 = DatePickerDialog.newInstance(this,
                     calendar1.get(Calendar.YEAR),
                     calendar1.get(Calendar.MONTH),
                     calendar1.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show(getFragmentManager(), "datePickerDialog");
-            datePickerDialog.setVersion(DatePickerDialog.Version.VERSION_2);
-            datePickerDialog.setMinDate(_calendar);
-            if(unavailableCalendar!=null){
-                datePickerDialog.setDisabledDays(unavailableCalendar);
-            }
-
-            endDate = calendar1.getTime();
-            checkEndDate = endDate.getYear()*10000+endDate.getMonth()*100+endDate.getDate();
-
-            if(endDate.getTime()>startDate.getTime()){
-                tv_endDate.setText(sdf.format(endDate));
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "choose another date", Toast.LENGTH_SHORT).show();
-                pickEndDate();
-            }
+            datePickerDialog2.show(getFragmentManager(), "datePickerDialog");
+            datePickerDialog1.setVersion(DatePickerDialog.Version.VERSION_1);
+            datePickerDialog2.setMinDate(_calendar);
+            if(unavailableCalendar!=null) datePickerDialog2.setDisabledDays(unavailableCalendar);
         }
-//            prepareDateList();
-//            DatePickerDialog datePickerDialog2 = new DatePickerDialog(NewScheduleActivity.this, endDatePicker,
-//                    calendar1.get(Calendar.YEAR),
-//                    calendar1.get(Calendar.MONTH),
-//                    calendar1.get(Calendar.DAY_OF_MONTH));
-//            datePickerDialog2.getDatePicker().setMinDate(startDate.getTime());
-//            datePickerDialog2.show();
     }
 
     @OnClick(R.id.btn_create) public void createNew(){
@@ -296,28 +172,27 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
             return;
         }
         else if(checked && endDate==null){
-            Toast.makeText(this, "Enter event's start time", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter event's end date", Toast.LENGTH_SHORT).show();
             return;
         }
         else{
+            if(!checked) endDate=null;
             final ArrayList<Date> setNewUnavailable = new ArrayList<>();
             Calendar _calendar = Calendar.getInstance();
-
             setNewUnavailable.add(startDate);
+
             if(endDate!=null){
-                checkStartDate = (startDate.getYear()+1900)*10000+(startDate.getMonth()+1)*100+startDate.getDate();
-                checkEndDate = endDate.getYear()*10000+(endDate.getMonth()+1)*100+endDate.getDate();
-                for(int i=0;i>checkEndDate-checkStartDate-1;i--) {
-                    _calendar.setTime(new Date(startDate.getTime()));
+                for(int i=0;i>checkStartDate-checkEndDate;i--) {
+                    _calendar.setTime(new Date(endDate.getTime()));
                     _calendar.add(Calendar.DATE,i);
                     setNewUnavailable.add(new Date(_calendar.getTimeInMillis()));
                 }
             }
 
-            new FireDataSchedule(uID).writeSchedule(event, roomID, roomName, speaker, participant, startDate, endDate, new DatabaseReference.CompletionListener() {
+            new FireDataSchedule(uID).writeSchedule(event, roomID, roomCap, roomName, speaker, participant, startDate, endDate, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                    new FireDataUnavailableTime(uID).writeUnavailable(roomID, setNewUnavailable, new DatabaseReference.CompletionListener() {
+                    new FireDataUnavailableTime(uID).writeUnavailable(roomID, databaseReference.getKey(), setNewUnavailable, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             finish();
@@ -328,17 +203,32 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        spinner_room.setSelection(position);
-        roomID = allRoomList.get(position).getuID();
-        roomName = allRoomList.get(position).getName();
-        prepareDateList();
-    }
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode==1){
+            if(resultCode == Activity.RESULT_OK){
+                roomID = data.getStringExtra("roomID");
+                roomCap = data.getStringExtra("roomCap");
+                roomName = data.getStringExtra("roomName");
+                tv_room.setText(roomName+" (capacity: "+roomCap+")");
+                prepareDateList();
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+                Calendar _calendar = Calendar.getInstance();
+                if (startDate != null) {
+                    _calendar.setTime(startDate);
+                    if(_listCalendar.contains(_calendar)) {
+                        startDate=null;
+                        tv_startDate.setText("choose start date");
+                    }
+                }
+                if (endDate != null) {
+                    _calendar.setTime(endDate);
+                    if(_listCalendar.contains(_calendar)) {
+                        endDate=null;
+                        tv_endDate.setText("choose end date");
+                    }
+                }
+            }
+        }
     }
 
     @OnClick(R.id.btn_back) public void back(){
@@ -359,10 +249,24 @@ public class NewScheduleActivity extends AppCompatActivity implements OnItemSele
                 else{
                     checked=false;
                     ll_endDate.setVisibility(View.GONE);
-                    endDate=null;
                 }
             }
         });
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        if(view==datePickerDialog1) {
+            startDate = new Date(year-1900, monthOfYear, dayOfMonth);
+            checkStartDate = year*10000+monthOfYear*100+dayOfMonth;
+            tv_startDate.setText(sdf.format(startDate));
+        }
+
+        else if(view==datePickerDialog2) {
+            endDate = new Date(year-1900, monthOfYear, dayOfMonth);
+            checkEndDate = year*10000+monthOfYear*100+dayOfMonth;
+            tv_endDate.setText(sdf.format(endDate));
+        }
     }
 
 }

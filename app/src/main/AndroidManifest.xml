@@ -39,7 +39,8 @@
         <activity android:name=".ActivityHome.AboutActivity" />
         <activity android:name=".ActivityAccount.ProfilActivity" />
         <activity android:name=".ActivitySchedule.NewScheduleActivity" />
-        <activity android:name=".ActivitySchedule.ModifScheduleActivity" />\
+        <activity android:name=".ActivitySchedule.ModifScheduleActivity" />
+        \
         <activity android:name=".Room.EditRoomActivity" />
         <activity
             android:name=".Room.AvailableRoomActivity"
@@ -49,7 +50,9 @@
             android:name=".ActivityAccount.EditPhoneActivity"
             android:label="@string/title_activity_edit_phone"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Room.AddRoomActivity"></activity>
+        <activity android:name=".Room.AddRoomActivity" />
+        <activity android:name=".ActivitySchedule.setRoomActivity" />
+        <activity android:name=".ActivityHome.AnnouncementActivity"></activity>
     </application>
 
 </manifest>

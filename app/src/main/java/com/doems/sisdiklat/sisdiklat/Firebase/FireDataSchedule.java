@@ -13,6 +13,7 @@ public class FireDataSchedule {
     public static final String COLLECTION_USER = "schedule";
     public static final String EVENT = "event";
     public static final String ROOMID = "roomID";
+    public static final String ROOMCAP = "roomCap";
     public static final String ROOMNAME = "roomName";
     public static final String SPEAKER = "speaker";
     public static final String PARTICIPANT = "participant";
@@ -31,11 +32,12 @@ public class FireDataSchedule {
         ref = FireData.getRefDatabase().child(COLLECTION_USER);
     }
 
-    public void writeSchedule(String event, String roomID, String roomName, String speaker, String participant,
+    public void writeSchedule(String event, String roomID,String roomCap, String roomName, String speaker, String participant,
             Date startDate, Date endDate, DatabaseReference.CompletionListener completionListener){
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put(EVENT, event);
         objectMap.put(ROOMID, roomID);
+        objectMap.put(ROOMCAP, roomCap);
         objectMap.put(ROOMNAME, roomName);
         objectMap.put(SPEAKER, speaker);
         objectMap.put(PARTICIPANT, participant);
@@ -44,11 +46,12 @@ public class FireDataSchedule {
         ref.child(ref.push().getKey()).updateChildren(objectMap, completionListener);
     }
 
-    public void editSchedule(String uID, String event, String roomID, String roomName, String speaker, String participant,
+    public void editSchedule(String uID, String event, String roomID,String roomCap, String roomName, String speaker, String participant,
                               Date startDate, Date endDate, DatabaseReference.CompletionListener completionListener){
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put(EVENT, event);
         objectMap.put(ROOMID, roomID);
+        objectMap.put(ROOMCAP, roomCap);
         objectMap.put(ROOMNAME, roomName);
         objectMap.put(SPEAKER, speaker);
         objectMap.put(PARTICIPANT, participant);
