@@ -40,7 +40,7 @@
                     android:text="August"
                     android:textAllCaps="true"
                     android:textColor="@color/red"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_room"
@@ -50,7 +50,7 @@
                     android:text="TC-101"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="Diklat Latsar"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -81,7 +81,7 @@
                     android:layout_weight="1"
                     android:text="Pengajar: Suminarti"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_participant"
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:text="Peserta: CPNS"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

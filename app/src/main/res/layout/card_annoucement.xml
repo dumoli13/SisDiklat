@@ -4,6 +4,7 @@
     android:id="@+id/layout_cardAnnouncement"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/border_top_bottom"
     android:layout_marginBottom="@dimen/margin_quarter">
 
     <ImageView

@@ -3,9 +3,6 @@ package com.doems.sisdiklat.sisdiklat.ActivityHome;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,13 +11,11 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doems.sisdiklat.sisdiklat.Adapter.AnnouncementAdapter;
-import com.doems.sisdiklat.sisdiklat.Firebase.FireData;
 import com.doems.sisdiklat.sisdiklat.Firebase.FireDataAnnouncement;
 import com.doems.sisdiklat.sisdiklat.Model.ModelAnnouncement;
 import com.doems.sisdiklat.sisdiklat.R;
@@ -31,14 +26,12 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -95,47 +88,6 @@ public class AnnouncementActivity extends AppCompatActivity {
             tv_noImage.setVisibility(View.VISIBLE);
             rv_image.setVisibility(View.GONE);
         }
-    }
-
-    private Uri loadImage(String name){
-        final Uri[] result = new Uri[1];
-        try{
-            localFile = File.createTempFile("images", "jpg");
-//            Log.d("tsss",uID+"/announcement/"+name);
-            if(mStorageRef!=null){
-//                mStorageRef.child(uID+"/announcement/"+name).getFile(localFile)
-//                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                            result[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-//                            Toast.makeText(getApplicationContext(), result[0].getByteCount(), Toast.LENGTH_LONG).show();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                });
-                mStorageRef.child(uID+"/announcement/"+name).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        result[0]=uri;
-                        Log.d("tsss", String.valueOf(result[0]));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        return result[0];
     }
 
     private void initList(){
@@ -236,14 +188,15 @@ public class AnnouncementActivity extends AppCompatActivity {
             String path = data.getDataString();
             String fileName = path.substring(path.lastIndexOf("/")+1);
 
-            final StorageReference storageReference = mStorageRef.child(uID+"/announcement/"+fileName);
-            storageReference.putFile(file)
+            //UPLOAD BIG SIZE FILE
+            final StorageReference storageReference1 = mStorageRef.child(uID+"/announcement/"+fileName);
+            storageReference1.putFile(file)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             pDialog.hide();
                             String name = taskSnapshot.getMetadata().getName();
-                            String url = storageReference.getDownloadUrl().toString();
+                            String url = storageReference1.getDownloadUrl().toString();
 
                             new FireDataAnnouncement(uID).writeAdress(name, url, new DatabaseReference.CompletionListener() {
                                 @Override

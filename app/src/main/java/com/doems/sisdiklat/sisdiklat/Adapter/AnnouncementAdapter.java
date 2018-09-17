@@ -2,6 +2,7 @@ package com.doems.sisdiklat.sisdiklat.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.doems.sisdiklat.sisdiklat.Firebase.FireDataAnnouncement;
+import com.doems.sisdiklat.sisdiklat.Misc.BitmapTransform;
 import com.doems.sisdiklat.sisdiklat.Model.ModelAnnouncement;
 import com.doems.sisdiklat.sisdiklat.Model.ModelRoom;
 import com.doems.sisdiklat.sisdiklat.R;
@@ -21,6 +23,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,7 +80,19 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
         final String name = announcement.getName();
         final Uri url = Uri.parse(announcement.getUrl());
 
-        Picasso.with(context).load(url).fit().into(myViewHolder.iv_content);
+//        Show original file from the database
+//        Picasso.with(context).load(url).fit().into(myViewHolder.iv_content);
+
+//        show compressed file from the database
+        int maxWidth = 1024;
+        int maxHeight = 768;
+        int size = (int) Math.ceil(Math.sqrt(maxWidth * maxHeight));
+        Picasso.with(context).load(url).transform(new BitmapTransform(maxWidth,maxHeight))
+                .skipMemoryCache()
+                .resize(size,size)
+                .centerInside()
+                .into(myViewHolder.iv_content);
+
 
         myViewHolder.iv_trash.setOnClickListener(new View.OnClickListener() {
             @Override
