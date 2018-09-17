@@ -114,7 +114,7 @@ public class AvailableRoomActivity extends AppCompatActivity {
 
             }
         };
-        new FireDataRoom(uID).ref.addChildEventListener(childEventListener);
+        new FireDataRoom(uID).ref.orderByChild(FireDataRoom.NAME).addChildEventListener(childEventListener);
     }
 
     @OnClick(R.id.btn_addNew) public void addNew(){

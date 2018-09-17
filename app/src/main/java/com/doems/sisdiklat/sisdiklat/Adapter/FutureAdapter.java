@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +20,12 @@ import com.doems.sisdiklat.sisdiklat.ActivityHome.FutureActivity;
 import com.doems.sisdiklat.sisdiklat.ActivitySchedule.ModifScheduleActivity;
 import com.doems.sisdiklat.sisdiklat.Firebase.FireDataRoom;
 import com.doems.sisdiklat.sisdiklat.Firebase.FireDataSchedule;
+import com.doems.sisdiklat.sisdiklat.Firebase.FireDataUnavailableTime;
 import com.doems.sisdiklat.sisdiklat.Model.ModelSchedule;
 import com.doems.sisdiklat.sisdiklat.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,6 +93,8 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.MyViewHold
         SimpleDateFormat sdfDate = new SimpleDateFormat("d", Locale.US);
         SimpleDateFormat sdfMonth = new SimpleDateFormat("MMM", Locale.US);
 
+        final String roomID = schedule.getRoomID();
+        final String scheduleID = schedule.getuID();
         String date = sdfDate.format(schedule.getStartDate());
         String month = sdfMonth.format(schedule.getStartDate());
 
@@ -111,7 +117,6 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.MyViewHold
         myViewHolder.iv_trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FireDataSchedule(myViewHolder.uID).ref.child(key).removeValue();
 
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -123,7 +128,12 @@ public class FutureAdapter extends RecyclerView.Adapter<FutureAdapter.MyViewHold
                 builder.setMessage("Are you sure you want to delete?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                new FireDataSchedule(myViewHolder.uID).ref.child(key).removeValue();
+                                new FireDataSchedule(myViewHolder.uID).ref.child(key).removeValue(new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                        new FireDataUnavailableTime(myViewHolder.uID).ref.child(roomID).child(scheduleID).child("date").child("0").removeValue();
+                                    }
+                                });
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

@@ -40,7 +40,6 @@ public class PastActivity extends Fragment {
     @BindView(R.id.recyclerview_schedule)RecyclerView recyclerview_schedule;
 
     private ChildEventListener childEventListener;
-    private ValueEventListener valueEventListener;
     private Map<String, ModelSchedule> pastListMap = new LinkedHashMap<>();
     private PastAdapter mAdapter;
 
@@ -86,6 +85,7 @@ public class PastActivity extends Fragment {
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d("tsss",String.valueOf(System.currentTimeMillis()));
                 String key = dataSnapshot.getKey();
                 ModelSchedule schedule= dataSnapshot.getValue(ModelSchedule.class);
                 if(schedule!=null){
@@ -149,7 +149,7 @@ public class PastActivity extends Fragment {
 
             }
         };
-        new FireDataSchedule(uID).ref.addChildEventListener(childEventListener);
+        new FireDataSchedule(uID).ref.orderByChild(FireDataSchedule.STARTDATE).addChildEventListener(childEventListener);
     }
 
     @Override public void onStart() {

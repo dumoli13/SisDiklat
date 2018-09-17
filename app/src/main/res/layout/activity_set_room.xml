@@ -10,7 +10,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_quarter"
+        android:paddingTop="@dimen/padding_quarter_quarter"
+        android:paddingBottom="@dimen/padding_quarter_quarter"
+        android:paddingLeft="@dimen/padding_quarter"
+        android:paddingRight="@dimen/padding_quarter"
         android:layout_marginBottom="@dimen/margin_small_quarter"
         android:background="@color/lightBlue">
 
@@ -35,11 +38,12 @@
         android:id="@+id/tv_addRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="@color/lightBlue"
-        android:textStyle="bold"
         android:layout_marginBottom="@dimen/margin_quarter"
         android:layout_marginRight="@dimen/margin_quarter"
+        android:gravity="center"
+        android:textColor="@color/lightBlue"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:text="+ add new room" />
 
     <ScrollView
@@ -55,6 +59,7 @@
                 android:id="@+id/tv_noRoom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_quarter"
                 android:textColor="@color/black"
                 android:text="There is no room available" />
 

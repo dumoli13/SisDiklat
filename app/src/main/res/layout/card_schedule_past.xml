@@ -16,7 +16,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_date"
-                android:layout_width="wrap_content"
+                android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="18"
+                    android:gravity="center"
                     android:textAllCaps="true"
                     android:textColor="@color/red"
                     android:textSize="18sp" />
@@ -38,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="August"
+                    android:gravity="center"
                     android:textAllCaps="true"
                     android:textColor="@color/red"
                     android:textSize="12sp" />
@@ -48,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="TC-101"
+                    android:gravity="center"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="12sp"
@@ -61,7 +64,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:orientation="vertical"
-                android:layout_toRightOf="@id/ll_date"
+                android:layout_toEndOf="@id/ll_date"
                 android:background="@drawable/border_left"
                 android:padding="@dimen/padding_small_quarter">
 

@@ -85,9 +85,9 @@ public class FutureActivity extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String key = dataSnapshot.getKey();
                 ModelSchedule schedule= dataSnapshot.getValue(ModelSchedule.class);
+                Log.d("tsss",String.valueOf(System.currentTimeMillis()));
                 if(schedule!=null){
                     Date startDate = schedule.getStartDate();
-
                     if(System.currentTimeMillis()<startDate.getTime()){
                         Date endDate=null;
                         if(schedule.getEndDate()!=null) endDate = schedule.getEndDate();
@@ -145,7 +145,7 @@ public class FutureActivity extends Fragment {
 
             }
         };
-        new FireDataSchedule(uID).ref.addChildEventListener(childEventListener);
+        new FireDataSchedule(uID).ref.orderByKey().addChildEventListener(childEventListener);
     }
 
     @Override public void onStart() {

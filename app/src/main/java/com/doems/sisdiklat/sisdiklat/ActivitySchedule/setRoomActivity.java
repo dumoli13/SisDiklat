@@ -96,7 +96,7 @@ public class setRoomActivity extends AppCompatActivity {
 
             }
         };
-        new FireDataRoom(uID).ref.addValueEventListener(roomEventListener);
+        new FireDataRoom(uID).ref.orderByChild(FireDataRoom.NAME).addValueEventListener(roomEventListener);
     }
 
     @OnClick(R.id.tv_addRoom) public void addNewRoom(){

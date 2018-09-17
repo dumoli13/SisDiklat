@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -100,40 +101,46 @@ public class ModifScheduleActivity extends AppCompatActivity implements DatePick
     }
 
     private void prepareScheduleData(){
-        scheduleEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ModelSchedule modelSchedule = dataSnapshot.child(scheduleID).getValue(ModelSchedule.class);
-                event = modelSchedule.getEvent();
-                roomID = modelSchedule.getRoomID();
-                roomCap = modelSchedule.getRoomCap();
-                roomName = modelSchedule.getRoomName();
-                speaker = modelSchedule.getSpeaker();
-                participant = modelSchedule.getParticipant();
-                startDate = modelSchedule.getStartDate();
-                if(modelSchedule.getEndDate()!=null) endDate = modelSchedule.getEndDate();
+        try{
+            scheduleEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ModelSchedule modelSchedule = dataSnapshot.child(scheduleID).getValue(ModelSchedule.class);
+                    event = modelSchedule.getEvent();
+                    roomID = modelSchedule.getRoomID();
+                    roomCap = modelSchedule.getRoomCap();
+                    roomName = modelSchedule.getRoomName();
+                    speaker = modelSchedule.getSpeaker();
+                    participant = modelSchedule.getParticipant();
+                    startDate = modelSchedule.getStartDate();
+                    if(modelSchedule.getEndDate()!=null) endDate = modelSchedule.getEndDate();
 
-                et_event.setText(event);
-                tv_room.setText(roomName+" (capacity: "+roomCap+")");
-                et_participant.setText(participant);
-                et_speaker.setText(speaker);
-                tv_startDate.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(startDate));
-                if(endDate==null){
-                    ll_endDate.setVisibility(View.GONE);
-                    checkBox.setChecked(false);
+                    prepareDateList();
+                    et_event.setText(event);
+                    tv_room.setText(roomName+" (capacity: "+roomCap+")");
+                    et_participant.setText(participant);
+                    et_speaker.setText(speaker);
+                    tv_startDate.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(startDate));
+                    if(endDate==null){
+                        ll_endDate.setVisibility(View.GONE);
+                        checkBox.setChecked(false);
+                    }
+                    else{
+                        checkBox.setChecked(true);
+                        tv_endDate.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(endDate));
+                    }
                 }
-                else{
-                checkBox.setChecked(true);
-                tv_endDate.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(endDate));
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        new FireDataSchedule(uID).ref.addValueEventListener(scheduleEventListener);
+            };
+            new FireDataSchedule(uID).ref.addValueEventListener(scheduleEventListener);
+        }
+        catch (Error e){
+            e.getMessage();
+        }
     }
 
     private void prepareDateList(){
@@ -197,7 +204,7 @@ public class ModifScheduleActivity extends AppCompatActivity implements DatePick
                     calendar1.get(Calendar.MONTH),
                     calendar1.get(Calendar.DAY_OF_MONTH));
             datePickerDialog2.show(getFragmentManager(), "datePickerDialog");
-            datePickerDialog1.setVersion(DatePickerDialog.Version.VERSION_1);
+            datePickerDialog1.setVersion(DatePickerDialog.Version.VERSION_2);
             datePickerDialog2.setMinDate(_calendar);
             if (unavailableCalendar != null) datePickerDialog2.setDisabledDays(unavailableCalendar);
         }

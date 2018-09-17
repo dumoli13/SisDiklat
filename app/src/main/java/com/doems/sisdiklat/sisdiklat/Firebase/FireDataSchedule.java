@@ -35,6 +35,7 @@ public class FireDataSchedule {
     public void writeSchedule(String event, String roomID,String roomCap, String roomName, String speaker, String participant,
             Date startDate, Date endDate, DatabaseReference.CompletionListener completionListener){
         Map<String, Object> objectMap = new HashMap<>();
+        String uID = startDate.getYear()*10000+startDate.getMonth()*100+startDate.getDate()+roomName;
         objectMap.put(EVENT, event);
         objectMap.put(ROOMID, roomID);
         objectMap.put(ROOMCAP, roomCap);
@@ -43,7 +44,7 @@ public class FireDataSchedule {
         objectMap.put(PARTICIPANT, participant);
         objectMap.put(STARTDATE, startDate);
         objectMap.put(ENDDATE, endDate);
-        ref.child(ref.push().getKey()).updateChildren(objectMap, completionListener);
+        ref.child(uID).updateChildren(objectMap, completionListener);
     }
 
     public void editSchedule(String uID, String event, String roomID,String roomCap, String roomName, String speaker, String participant,

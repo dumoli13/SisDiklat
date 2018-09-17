@@ -144,7 +144,7 @@ public class NewScheduleActivity extends AppCompatActivity implements DatePicker
                     calendar1.get(Calendar.MONTH),
                     calendar1.get(Calendar.DAY_OF_MONTH));
             datePickerDialog2.show(getFragmentManager(), "datePickerDialog");
-            datePickerDialog1.setVersion(DatePickerDialog.Version.VERSION_1);
+            datePickerDialog1.setVersion(DatePickerDialog.Version.VERSION_2);
             datePickerDialog2.setMinDate(_calendar);
             if(unavailableCalendar!=null) datePickerDialog2.setDisabledDays(unavailableCalendar);
         }
