@@ -117,6 +117,7 @@ public class HomeActivity extends AppCompatActivity {
             menu = _menu.inflate(R.layout.menu, null, false);
 
             TextView menu_runningText = menu.findViewById(R.id.menu_runningText);
+            TextView menu_imageAnnoucement = menu.findViewById(R.id.menu_imageAnnoucement);
             TextView menu_room = menu.findViewById(R.id.menu_room);
             TextView menu_account = menu.findViewById(R.id.menu_account);
             TextView menu_about = menu.findViewById(R.id.menu_about);
@@ -136,6 +137,15 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(HomeActivity.this, RunningTextActivity.class));
+                    rl_menu.removeView(menu);
+                    rl_menu.setVisibility(View.GONE);
+                }
+            });
+
+            menu_imageAnnoucement.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(HomeActivity.this, AnnouncementActivity.class));
                     rl_menu.removeView(menu);
                     rl_menu.setVisibility(View.GONE);
                 }

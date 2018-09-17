@@ -1,5 +1,6 @@
 package com.doems.sisdiklat.sisdiklat.ActivityAccount;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
     private String password1;
     private String password2;
     private String phone;
+    private ProgressDialog pDialog;
 
     private FirebaseAuth mAuth;
 
@@ -51,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
+        pDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_DARK);
     }
 
     private void setValue(){
@@ -61,6 +64,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_signUp) public void signUp(){
+        pDialog.setMessage("signing up...");
+        pDialog.show();
         setValue();
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
@@ -105,6 +110,8 @@ public class SignUpActivity extends AppCompatActivity {
                                         new FireDataEmail().writeEmail(email, new DatabaseReference.CompletionListener() {
                                             @Override
                                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                pDialog.hide();
+
                                                 Toast.makeText(SignUpActivity.this,"Account Successfully Registered", Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
                                             }

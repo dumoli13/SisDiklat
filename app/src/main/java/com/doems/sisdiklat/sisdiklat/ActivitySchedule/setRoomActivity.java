@@ -1,34 +1,25 @@
 package com.doems.sisdiklat.sisdiklat.ActivitySchedule;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.doems.sisdiklat.sisdiklat.Adapter.FutureAdapter;
-import com.doems.sisdiklat.sisdiklat.Adapter.SetRoomAdapter;
 import com.doems.sisdiklat.sisdiklat.Firebase.FireDataRoom;
 import com.doems.sisdiklat.sisdiklat.Model.ModelRoom;
 import com.doems.sisdiklat.sisdiklat.R;
 import com.doems.sisdiklat.sisdiklat.Room.AddRoomActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

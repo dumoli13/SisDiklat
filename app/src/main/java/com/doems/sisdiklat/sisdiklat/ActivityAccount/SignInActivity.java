@@ -1,5 +1,6 @@
 package com.doems.sisdiklat.sisdiklat.ActivityAccount;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ public class SignInActivity extends AppCompatActivity {
     String email;
     String password;
     String uID;
+    private ProgressDialog pDialog;
 
     List<String> emailList = new ArrayList<>();
 
@@ -57,6 +59,7 @@ public class SignInActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        pDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_DARK);
 
         if(user != null){
             startActivity(new Intent(SignInActivity.this, HomeActivity.class));
@@ -91,6 +94,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_signIn) public void signIn(){
+        pDialog.setMessage("uploading file...");
+        pDialog.show();
+
         setValue();
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this,"Enter your email", Toast.LENGTH_SHORT).show();

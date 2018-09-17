@@ -18,7 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_quarter_quarter"
-            android:text="Set Running Text"
+            android:text="Manage Running Text"
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/menu_imageAnnoucement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_quarter_quarter"
+            android:text="Manage Image Annoucement"
             android:textSize="16sp"
             android:textColor="@color/black" />
 
@@ -27,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_quarter_quarter"
-            android:text="Available Room"
+            android:text="Manage Available Room"
             android:textSize="16sp"
             android:textColor="@color/black" />
 

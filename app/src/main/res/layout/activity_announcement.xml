@@ -1,9 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.doems.sisdiklat.sisdiklat.ActivityHome.AnnouncementActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_small_quarter"
+        android:background="@color/lightBlue"
+        android:paddingBottom="@dimen/padding_quarter_quarter"
+        android:paddingTop="@dimen/padding_quarter_quarter">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/back_white" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btn_back"
+            android:text="ANNOUNCEMENT"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_addNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingLeft="@dimen/margin_quarter"
+            android:paddingRight="@dimen/margin_quarter"
+            android:text="Add New" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_heading"
+        android:layout_marginTop="@dimen/margin_quarter">
+
+        <TextView
+            android:id="@+id/tv_noImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_quarter"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:text="No announcement found. Add a new one." />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
